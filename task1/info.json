@@ -1,0 +1,24 @@
+{
+  "logs": [
+    { "method": "GET", "url": "/", "time": "2010-03-17T18:53:12.030Z" },
+    { "method": "POST", "url": "/", "time": "2013-03-17T18:53:21.324Z" },
+    { "method": "DELETE", "url": "/", "time": "2015-03-17T18:53:25.549Z" },
+    { "method": "GET", "url": "/hello", "time": "2020-03-17T18:53:37.300Z" },
+    {
+      "method": "GET",
+      "url": "/?from=2020-02-17&to=2020-03-17",
+      "time": "2020-03-17T18:54:07.815Z"
+    },
+    {
+      "method": "GET",
+      "url": "/get-all-logs",
+      "time": "2020-03-17T18:54:20.890Z"
+    },
+    { "method": "DELETE", "url": "/log", "time": "2020-03-17T18:54:45.836Z" },
+    {
+      "method": "DELETE",
+      "url": "/logs?from=2010-01-01&to=2015-12-12",
+      "time": "2020-03-17T18:55:53.960Z"
+    }
+  ]
+}
