@@ -21,22 +21,27 @@ http
       await writeToJson(path, requestInfo);
     }
     catch(err) {
-      console.error(err);
-      return;
+      throw err;
     }
 
     res.writeHead(200, { "Content-Type": "application/json" });
 
     if (req.url === "/get-all-logs" && req.method === "GET") {
-      return res.end(JSON.stringify(await readFromFile(path)));
+      try {
+        const allLogs = JSON.stringify(await readFromFile(path));
+        return res.end(allLogs);
+      } catch(err) {
+        throw err;
+      }
+     
     }
 
-    let urlHasQuery = !(Object.keys(queryObject).length === 0);
+    const urlHasQuery = Object.keys(queryObject).length !== 0;
     if (urlHasQuery) {
       const from = queryObject.from;
       const to = queryObject.to;
-      let array = await getDataRanged(path, from, to);
-      return res.end(JSON.stringify(array));
+      const rangedLogs = await getDataRanged(path, from, to);
+      return res.end(JSON.stringify(rangedLogs));
     }
 
     res.end(JSON.stringify({ status: "ok" }));
@@ -44,7 +49,7 @@ http
   .listen(PORT);
 
 async function writeToJson(path, requestInfo) {
-  let data = await readFromFile(path);
+  const data = await readFromFile(path);
   data.logs.push(requestInfo);
 
   const writeData = JSON.stringify(data);
@@ -57,7 +62,7 @@ async function writeToJson(path, requestInfo) {
 
 async function readFromFile(path) {
   try {
-    let data = await readFile(path);
+    const data = await readFile(path);
     return JSON.parse(data);
   } catch (err) {
     throw err;
@@ -65,9 +70,9 @@ async function readFromFile(path) {
 }
 
 async function getDataRanged(path, from, to) {
-  let data = await readFromFile(path);
-  return data.logs.filter(elem => {
-    let date = elem.time.toString().split("T")[0];
-    if (date >= from && date <= to) return elem;
+  const data = await readFromFile(path);
+  return data.logs.filter(log => {
+    let logDate = log.time.toString().split("T")[0];
+    return logDate >= from && logDate <= to;
   });
 }
