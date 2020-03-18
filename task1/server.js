@@ -19,8 +19,9 @@ http
 
     try {
       await writeToJson(path, requestInfo);
-    }
-    catch(err) {
+    } catch (err) {
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ status: "server error" }));
       throw err;
     }
 
@@ -30,10 +31,11 @@ http
       try {
         const allLogs = JSON.stringify(await readFromFile(path));
         return res.end(allLogs);
-      } catch(err) {
+      } catch (err) {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ status: "server error" }));
         throw err;
       }
-     
     }
 
     const urlHasQuery = Object.keys(queryObject).length !== 0;
@@ -72,7 +74,7 @@ async function readFromFile(path) {
 async function getDataRanged(path, from, to) {
   const data = await readFromFile(path);
   return data.logs.filter(log => {
-    let logDate = log.time.toString().split("T")[0];
+    const logDate = log.time.toString().split("T")[0];
     return logDate >= from && logDate <= to;
   });
 }
