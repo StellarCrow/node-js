@@ -19,6 +19,50 @@
       "method": "DELETE",
       "url": "/logs?from=2010-01-01&to=2015-12-12",
       "time": "2020-03-17T18:55:53.960Z"
+    },
+    { "method": "DELETE", "url": "/", "time": "2020-03-18T08:53:08.164Z" },
+    { "method": "GET", "url": "/data", "time": "2020-03-18T08:53:39.775Z" },
+    {
+      "method": "GET",
+      "url": "/get-all-logs",
+      "time": "2020-03-18T08:53:50.103Z"
+    },
+    {
+      "method": "GET",
+      "url": "/get-all-logs",
+      "time": "2020-03-18T08:55:32.663Z"
+    },
+    {
+      "method": "GET",
+      "url": "/?from=2020-02-17&to=2020-03-17",
+      "time": "2020-03-18T08:56:14.102Z"
+    },
+    {
+      "method": "GET",
+      "url": "/?from=2020-02-17&to=2020-03-17",
+      "time": "2020-03-18T08:57:11.519Z"
+    },
+    {
+      "method": "GET",
+      "url": "/?from=2010-02-17&to=2015-03-17",
+      "time": "2020-03-18T08:57:40.039Z"
+    },
+    {
+      "method": "GET",
+      "url": "/get-all-logs",
+      "time": "2020-03-18T09:03:30.408Z"
+    },
+    {
+      "method": "GET",
+      "url": "/get-all-logs",
+      "time": "2020-03-18T09:04:13.328Z"
+    },
+    { "method": "POST", "url": "/lalala", "time": "2020-03-18T09:05:23.015Z" },
+    { "method": "POST", "url": "/data", "time": "2020-03-18T09:28:52.431Z" },
+    {
+      "method": "GET",
+      "url": "/?from=2020-03-16&to=2020-03-17",
+      "time": "2020-03-18T09:31:15.916Z"
     }
   ]
 }

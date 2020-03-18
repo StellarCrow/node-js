@@ -1,10 +1,14 @@
 const http = require("http");
 const fs = require("fs");
+const util = require("util");
 const url = require("url");
 const PORT = 3000;
 
+const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
+
 http
-  .createServer((req, res) => {
+  .createServer(async (req, res) => {
     const path = "info.json";
     const queryObject = url.parse(req.url, true).query;
     const requestInfo = {
@@ -13,23 +17,25 @@ http
       time: new Date()
     };
 
-    if (fs.existsSync(path)) {
-      writeToJson(path, requestInfo);
-    } else {
-      createNewFile(path, requestInfo);
+    try {
+      await writeToJson(path, requestInfo);
+    }
+    catch(err) {
+      console.error(err);
+      return;
     }
 
     res.writeHead(200, { "Content-Type": "application/json" });
 
     if (req.url === "/get-all-logs" && req.method === "GET") {
-      return res.end(JSON.stringify(readFromFile(path)));
+      return res.end(JSON.stringify(await readFromFile(path)));
     }
 
-    let urlHasQuery = (Object.keys(queryObject).length === 0) ? false : true;
+    let urlHasQuery = !(Object.keys(queryObject).length === 0);
     if (urlHasQuery) {
       const from = queryObject.from;
       const to = queryObject.to;
-      let array = getDataRanged(path, from, to);
+      let array = await getDataRanged(path, from, to);
       return res.end(JSON.stringify(array));
     }
 
@@ -37,35 +43,29 @@ http
   })
   .listen(PORT);
 
-function writeToJson(path, requestInfo) {
-  let data = readFromFile(path);
+async function writeToJson(path, requestInfo) {
+  let data = await readFromFile(path);
   data.logs.push(requestInfo);
 
-  let writeData = JSON.stringify(data);
-  fs.writeFileSync(path, writeData, "utf8");
+  const writeData = JSON.stringify(data);
+  try {
+    await writeFile(path, writeData, "utf8");
+  } catch (err) {
+    throw err;
+  }
 }
 
-function createNewFile(path, requestInfo) {
-  let data = {
-    logs: []
-  };
-  data.logs.push(requestInfo);
-  let json = JSON.stringify(data);
-  fs.writeFile(path, json, "utf-8", err => {
-    if (err) console.log(err);
-    else console.log("Created a file!");
-  });
+async function readFromFile(path) {
+  try {
+    let data = await readFile(path);
+    return JSON.parse(data);
+  } catch (err) {
+    throw err;
+  }
 }
 
-function readFromFile(path) {
-  let data = fs.readFileSync(path, err => {
-    if (err) throw err;
-  });
-  return JSON.parse(data);
-}
-
-function getDataRanged(path, from, to) {
-  let data = readFromFile(path);
+async function getDataRanged(path, from, to) {
+  let data = await readFromFile(path);
   return data.logs.filter(elem => {
     let date = elem.time.toString().split("T")[0];
     if (date >= from && date <= to) return elem;
