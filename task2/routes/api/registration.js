@@ -12,7 +12,7 @@ router.post("/registration", async (req, res) => {
   const { user } = await UserService.registrateUser(newUser);
   if (user) {
     return res.status(201).json({ user: user });
-  } 
+  }
 });
 
 module.exports = router;
