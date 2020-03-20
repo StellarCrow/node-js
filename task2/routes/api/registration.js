@@ -9,9 +9,12 @@ router.post("/registration", async (req, res) => {
     password: req.body.password
   };
 
-  const { user } = await UserService.registrateUser(newUser);
-  if (user) {
+  try {
+    const { user } = await UserService.registrateUser(newUser);
     return res.status(201).json({ user: user });
+  }
+  catch(err) {
+      return res.status(400).json({error: err.message });
   }
 });
 

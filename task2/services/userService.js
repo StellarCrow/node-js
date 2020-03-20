@@ -14,9 +14,13 @@ class UserService {
     }
 
     const hashedPassword = Users.hashPassword(password);
-    const userRecord = await Users.createUser(name, login, hashedPassword);
-
-    return { user: userRecord };
+    try {
+      const userRecord = await Users.createUser(name, login, hashedPassword);
+      return { user: userRecord };
+    } catch(err) {
+      throw new Error(err.message);
+    }
+    
   }
 
   async signIn(login, password) {
@@ -25,8 +29,9 @@ class UserService {
       throw new Error("Wrong login!");
     }
     const hashedPassword = Users.hashPassword(password);
-    const user = await Users.signInUser(login, hashedPassword);
-    if (!user) {
+    const user = await Users.getUserByLogin(login);
+
+    if (user.password !== hashedPassword) {
       throw new Error("Wrong password!");
     }
     
@@ -36,7 +41,16 @@ class UserService {
 
   async getUser() {}
 
-  async deleteUser() {}
+  async deleteUser(user) {
+    const id = user.id;
+    try {
+      const deletedUser = await Users.deleteUser(id);
+      return deletedUser;
+    } catch(err) {
+      throw Error(err.message);
+    }
+   
+  }
 }
 
 module.exports = new UserService();

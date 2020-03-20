@@ -5,9 +5,13 @@ const UserService = require("../../services/UserService");
 router.post("/login", async (req, res) => {
   const { login, password } = req.body;
 
-  const { token, user } = await UserService.signIn(login, password);
+  try {
+    const { token, user } = await UserService.signIn(login, password);
+    return res.status(200).json({ token: token, user: user });
+  } catch (err) {
+    return res.status(400).json({ error: err.message});
+  }
   
-  res.status(200).json({ token: token, user: user });
 });
 
 module.exports = router;

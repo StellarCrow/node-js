@@ -13,21 +13,23 @@ class User {
     const users = await this.getUsers();
     const user = { id: uniqid(), name, login, password, notes: [] };
     users.users.push(user);
-    try {
-      await this.saveUsers(users);
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-
+    await this.saveUsers(users);
     return user;
   }
 
-  async signInUser(login, password) {
+  async deleteUser(id) {
     const users = await this.getUsers();
-    const [user] = users.users.filter(
-      user => user.login === login && user.password === password
-    );
+    const indexToDelete = users.users.findIndex(user => user.id === id);
+    console.log(indexToDelete);
+    const userToDelete = users.users.slice(indexToDelete, indexToDelete + 1)[0];
+    users.users.splice(indexToDelete, 1);
+    await this.saveUsers(users);
+    return userToDelete;
+  }
+
+  async getUserByLogin(login) {
+    const users = await this.getUsers();
+    const [user] = users.users.filter(user => user.login === login);
     return user;
   }
 
@@ -45,8 +47,7 @@ class User {
     try {
       return JSON.parse(await readFile(pathToUsers));
     } catch (err) {
-      console.error(err);
-      return null;
+      throw new Error("Can't read from file.");
     }
   }
 
@@ -55,7 +56,7 @@ class User {
     try {
       await writeFile(pathToUsers, writeData, "utf8");
     } catch (err) {
-      throw err;
+      throw new Error("Error while saving");
     }
   }
 
