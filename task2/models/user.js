@@ -3,7 +3,6 @@ const util = require("util");
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const uniqid = require("uniqid");
-const crypto = require("crypto");
 const pathToUsers = require("../config/path").usersJson;
 
 class User {
@@ -58,13 +57,6 @@ class User {
     } catch (err) {
       throw new Error("Error while saving");
     }
-  }
-
-  hashPassword(password) {
-    return crypto
-      .createHash("sha256")
-      .update(password)
-      .digest("hex");
   }
 }
 

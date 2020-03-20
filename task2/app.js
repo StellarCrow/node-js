@@ -17,6 +17,7 @@ app.use('/api', registrationRouter);
 app.use('/api', loginRouter);
 
 app.use(authorized);
+
 app.use('/api', noteRouter);
 app.use('/api', profileRouter);
 

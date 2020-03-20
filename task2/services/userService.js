@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const secret = require('../config/auth').secret;
 
 const Users = require("../models/user");
+const CryptographyService = require('../services/CryptographyService');
 
 class UserService {
   constructor() {}
@@ -13,7 +14,7 @@ class UserService {
       throw new Error("This login is already exist.");
     }
 
-    const hashedPassword = Users.hashPassword(password);
+    const hashedPassword = CryptographyService.hashPassword(password);
     try {
       const userRecord = await Users.createUser(name, login, hashedPassword);
       return { user: userRecord };
@@ -28,7 +29,7 @@ class UserService {
     if (!isLoginExist) {
       throw new Error("Wrong login!");
     }
-    const hashedPassword = Users.hashPassword(password);
+    const hashedPassword = CryptographyService.hashPassword(password);
     const user = await Users.getUserByLogin(login);
 
     if (user.password !== hashedPassword) {
