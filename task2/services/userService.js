@@ -1,16 +1,20 @@
+const User = require("../models/user");
 
-export default class UserService {
-    constructor() {}
+class UserService {
+  constructor() {}
 
-    Signup() {
+  async registrateUser(newUser) {
+    const { name, login, password } = newUser;
+    const userRecord = await User.createUser(name, login, password);
+    return { user: userRecord };
+  }
 
-    }
+  async getUser() {
 
-    Registrate() {
+  }
 
-    }
-
-    Delete() {
-        
-    }
+  async deleteUser() {}
 }
+
+
+module.exports = UserService;
