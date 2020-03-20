@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const secret = require('../config/auth').secret;
 
 const Users = require("../models/user");
-const CryptographyService = require('../services/CryptographyService');
+const CryptographyService = require('./CryptographyService');
 
 class UserService {
   constructor() {}

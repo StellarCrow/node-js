@@ -1,1 +1,11 @@
-{"users":[]}
+{
+  "users": [
+    {
+      "id": "5a3mcf7ok80q3js7",
+      "name": "dar",
+      "login": "dar",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "notes": []
+    }
+  ]
+}
