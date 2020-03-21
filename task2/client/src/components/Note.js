@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {deleteNote} from '../actions/noteActions';
 
-export default class Note extends Component {
+class Note extends Component {
     constructor(props) {
         super(props);
 
@@ -13,6 +15,11 @@ export default class Note extends Component {
             checked: checked
         }
     }
+
+    onDeleteClick = (id) => {
+        this.props.deleteNote(id);
+    }
+
     render() {
         return (
             <div className="note" id={this.state.id}>
@@ -21,10 +28,17 @@ export default class Note extends Component {
                 </div>
                 <div className="note__text">{this.state.text}</div>
                 <div className="note__options">
-                    <button className="note__button note__button--delete">Delete</button>
+                    <button className="note__button note__button--delete" onClick={this.onDeleteClick.bind(this, this.state.id)}>Delete</button>
                     <button className="note__button note__button--modify">Modify</button>
                 </div>
             </div>
         )
     }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+    notes: state.note,
+    note: ownProps.note
+})
+
+export default connect(mapStateToProps, { deleteNote })(Note);

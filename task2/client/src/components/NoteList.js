@@ -1,25 +1,40 @@
 import React, { Component } from "react";
 import Note from "./Note";
+import { connect } from "react-redux";
+import { getNotes } from "../actions/noteActions";
+import PropTypes from "prop-types";
 
-export default class NoteList extends Component {
-  constructor(props) {
-    super(props);
+class NoteList extends Component {
 
-    this.state = {
-      notes: props.notes
-    };
+  componentDidMount() {
+    this.props.getNotes();
   }
 
   render() {
-    const { notes } = this.state;
+    const { notes } = this.props.note;
+    
     return (
       <ul className="notes-list">
-          {notes.map(note => {
-            return <li className="notes-list__item" key={note.id}>
+        {notes.map(note => {
+          return (
+            <li className="notes-list__item" key={note.id}>
               <Note note={note}></Note>
             </li>
-          })}
+          );
+        })}
       </ul>
     );
   }
 }
+
+NoteList.propTypes = {
+  getNotes: PropTypes.func.isRequired,
+  note: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  note: state.note
+})
+
+
+export default connect(mapStateToProps, { getNotes})(NoteList)
