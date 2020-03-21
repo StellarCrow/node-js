@@ -18,3 +18,10 @@ export const deleteNote = id => {
     payload: id
   };
 };
+
+export const addNote = note => {
+    return {
+      type: ADD_NOTE,
+      payload: note
+    };
+  };
