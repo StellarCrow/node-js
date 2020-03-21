@@ -51,6 +51,15 @@ class Note {
     const notes = await this.getNotesFromFile();
     return notes.notes.filter(note => note.user_id === id);
   }
+
+  async changeCheckedState(id, state) {
+    const notes = await this.getNotesFromFile();
+    const noteIndex = notes.notes.findIndex(note => note.id === id);
+    notes.notes[noteIndex].checked = state;
+    const changedNote = notes.notes.slice(noteIndex, noteIndex + 1)[0];
+    await this.saveNotesToFile(notes);
+    return changedNote;
+  }
 }
 
 module.exports = new Note();

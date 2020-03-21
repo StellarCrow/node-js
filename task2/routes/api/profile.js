@@ -31,8 +31,8 @@ router.post("/add-note", async (req, res) => {
   }
 });
 
-router.delete('/delete-note', async(req, res) => {
-    const note_id = req.body.note;
+router.delete('/delete-note/:id', async(req, res) => {
+    const note_id = req.params.id;
     const user = req.user;
     try {
         const deletedNote = await UserService.deleteNote(user, note_id);
