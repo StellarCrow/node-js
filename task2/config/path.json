@@ -1,0 +1,4 @@
+{
+  "usersJson": "./models/users.json",
+  "notesJson": "./models/notes.json"
+}

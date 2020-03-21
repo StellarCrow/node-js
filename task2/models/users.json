@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": "5a3mc234k81nbkxk",
+      "name": "Daria",
+      "login": "daria",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "notes": ["5a3mc7jsk81ni9j0"]
+    },
+    {
+      "id": "5a3mcgbsk81y4v86",
+      "name": "Daria",
+      "login": "maria",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "notes": []
+    }
+  ]
+}
