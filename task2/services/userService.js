@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
-const secret = require('../config/auth').secret;
+const secret = require("../config/auth").secret;
 
 const Users = require("../models/user");
-const CryptographyService = require('./CryptographyService');
+const CryptographyService = require("./CryptographyService");
 
 class UserService {
   constructor() {}
@@ -18,10 +18,9 @@ class UserService {
     try {
       const userRecord = await Users.createUser(name, login, hashedPassword);
       return { user: userRecord };
-    } catch(err) {
+    } catch (err) {
       throw new Error(err.message);
     }
-    
   }
 
   async signIn(login, password) {
@@ -35,22 +34,35 @@ class UserService {
     if (user.password !== hashedPassword) {
       throw new Error("Wrong password!");
     }
-    
+
     let jwt_token = jwt.sign(user, secret);
     return { token: jwt_token, user: user };
   }
-
-  async getUser() {}
 
   async deleteUser(user) {
     const id = user.id;
     try {
       const deletedUser = await Users.deleteUser(id);
       return deletedUser;
-    } catch(err) {
-      throw Error(err.message);
+    } catch (err) {
+      throw new Error(err.message);
     }
-   
+  }
+
+  async getAllNotes(user) {
+    const id = user.id;
+    try {
+      const notes = await Users.getAllNotes(id);
+      return notes;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  async addNote(user, note) {
+    const id = user.id;
+    const newNote = await Users.addNote(id, note);
+    return newNote;
   }
 }
 

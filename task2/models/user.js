@@ -5,6 +5,8 @@ const writeFile = util.promisify(fs.writeFile);
 const uniqid = require("uniqid");
 const pathToUsers = require("../config/path").usersJson;
 
+const Notes = require('./note');
+
 class User {
   constructor() {}
 
@@ -19,7 +21,6 @@ class User {
   async deleteUser(id) {
     const users = await this.getUsers();
     const indexToDelete = users.users.findIndex(user => user.id === id);
-    console.log(indexToDelete);
     const userToDelete = users.users.slice(indexToDelete, indexToDelete + 1)[0];
     users.users.splice(indexToDelete, 1);
     await this.saveUsers(users);
@@ -29,6 +30,12 @@ class User {
   async getUserByLogin(login) {
     const users = await this.getUsers();
     const [user] = users.users.filter(user => user.login === login);
+    return user;
+  }
+
+  async getUserById(id) {
+    const users = await this.getUsers();
+    const [user] = users.users.filter(user => user.id === id);
     return user;
   }
 
@@ -57,6 +64,21 @@ class User {
     } catch (err) {
       throw new Error("Error while saving");
     }
+  }
+
+  async getAllNotes(id) {
+    return await Notes.getUserNotes(id);
+  }
+
+  async addNote(id, note) {
+    const newNote = await Notes.createNote(note, id);
+    const user = await this.getUserById(id);
+    user.notes.push(newNote.id);
+    const users = await this.getUsers();
+    const userIndex = users.users.findIndex(user => user.id === id);
+    users.users.splice(userIndex, 1, user);
+    await this.saveUsers(users);
+    return newNote;
   }
 }
 
