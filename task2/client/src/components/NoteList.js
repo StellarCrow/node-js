@@ -15,7 +15,7 @@ export default class NoteList extends Component {
     return (
       <ul className="notes-list">
           {notes.map(note => {
-            return <li className="notes-list__item">
+            return <li className="notes-list__item" key={note.id}>
               <Note note={note}></Note>
             </li>
           })}
