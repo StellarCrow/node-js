@@ -6,10 +6,7 @@ export default class NoteList extends Component {
     super(props);
 
     this.state = {
-      notes: [
-          {name: "kaka", id: 1, text: "hello"},
-          {name: "lala", id: 2, text: "see you later"}
-      ]
+      notes: props.notes
     };
   }
 

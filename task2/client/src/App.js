@@ -1,15 +1,21 @@
-import React from 'react';
-import './App.css';
-import Registration from "./components/Registration";
-import NoteList from "./components/NoteList";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./App.css";
+
+import Home from "./views/Home";
+import Profile from "./views/Profile";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Notes</h1>
-      <Registration></Registration>
-      <NoteList></NoteList>
-    </div>
+    <Router>
+      <div className="App">
+        <h1>Notes</h1>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/profile" component={Profile} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from 'axios';
 
-export default class Registration extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: "",
       login: "",
       password: "",
-      registrationErrors: ""
+      loginErrors: ""
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,45 +17,31 @@ export default class Registration extends Component {
 
   handleChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
-    });
+        [event.target.name]: event.target.value
+    })
   }
 
   handleSubmit(event) {
-    const { name, login, password } = this.state;
+      const {
+          login,
+          password
+      } = this.state;
 
-    axios
-      .post("http://localhost:5000/api/registration", {
-        name: name,
+    axios.post("http://localhost:5000/api/login", {
         login: login,
         password: password
-      })
-      .then(response => {
+    }).then(response => {
         console.log("reg response", response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).catch(err => {
+        console.log("Error: " + err);
+        
+    })
     event.preventDefault();
   }
 
   render() {
     return (
       <form className="form" autoComplete="off" onSubmit={this.handleSubmit}>
-        <div className="form__group">
-          <label htmlFor="name" className="form__label">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            className="form__input"
-            value={this.state.name}
-            onChange={this.handleChange}
-            required
-          />
-        </div>
         <div className="form__group">
           <label htmlFor="login" className="form__label">
             Login
@@ -86,9 +71,8 @@ export default class Registration extends Component {
           />
         </div>
         <button type="submit" className="form__button">
-          Register
+          Login
         </button>
-        <div className="form__error">{this.state.registrationErrors}</div>
       </form>
     );
   }
