@@ -60,6 +60,15 @@ class Note {
     await this.saveNotesToFile(notes);
     return changedNote;
   }
+
+  async changeText(id, text) {
+    const notes = await this.getNotesFromFile();
+    const noteIndex = notes.notes.findIndex(note => note.id === id);
+    notes.notes[noteIndex].text = text;
+    const changedNote = notes.notes.slice(noteIndex, noteIndex + 1)[0];
+    await this.saveNotesToFile(notes);
+    return changedNote;
+  }
 }
 
 module.exports = new Note();
