@@ -13,7 +13,8 @@ router.get("/notes", async (req, res) => {
   const user = req.user;
   try {
     const notes = await UserService.getAllNotes(user);
-    return res.status(200).json({ message: "Success", notes: notes });
+    const notes_count = notes.length;
+    return res.status(200).json({ message: "Success", notes_count: notes_count, notes: notes });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -29,5 +30,17 @@ router.post("/add-note", async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 });
+
+router.delete('/delete-note', async(req, res) => {
+    const note_id = req.body.note;
+    const user = req.user;
+    try {
+        const deletedNote = await UserService.deleteNote(user, note_id);
+        return res.status(200).json({ message: "Deleted note", note: deletedNote });
+      } catch (err) {
+        return res.status(500).json({ message: err.message });
+      }
+
+})
 
 module.exports = router;

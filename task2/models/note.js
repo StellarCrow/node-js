@@ -38,6 +38,15 @@ class Note {
     return newNote;
   }
 
+  async deleteNote(id) {
+    const notes = await this.getNotesFromFile();
+    const noteIndex = notes.notes.findIndex(note => note.id === id);
+    const noteToDelete = notes.notes.slice(noteIndex, noteIndex + 1)[0];
+    notes.notes.splice(noteIndex, 1);
+    await this.saveNotesToFile(notes);
+    return noteToDelete;
+  }
+
   async getUserNotes(id) {
     const notes = await this.getNotesFromFile();
     return notes.notes.filter(note => note.user_id === id);

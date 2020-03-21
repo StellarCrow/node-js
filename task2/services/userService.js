@@ -64,6 +64,12 @@ class UserService {
     const newNote = await Users.addNote(id, note);
     return newNote;
   }
+
+  async deleteNote(user, note_id) {
+    const id = user.id;
+    const deletedNote = await Users.deleteNote(id, note_id);
+    return deletedNote;
+  }
 }
 
 module.exports = new UserService();

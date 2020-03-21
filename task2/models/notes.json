@@ -2,12 +2,6 @@
   "notes": [
     {
       "user_id": "5a3mcf7ok80q3js7",
-      "text": "Some new note",
-      "checked": "false",
-      "id": "5a3mcbvgk81jsgpx"
-    },
-    {
-      "user_id": "5a3mcf7ok80q3js7",
       "text": "Some old note",
       "checked": "true",
       "id": "5a3mcaqck81k2wjn"

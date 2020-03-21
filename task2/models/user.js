@@ -80,6 +80,15 @@ class User {
     await this.saveUsers(users);
     return newNote;
   }
+
+  async deleteNote(id, note_id) {
+    const deletedNote = await Notes.deleteNote(note_id);
+    const users = await this.getUsers();
+    const userIndex = users.users.findIndex(user => user.id === id);
+    users.users[userIndex].notes.splice(deletedNote.id, 1);
+    await this.saveUsers(users);
+    return deletedNote;
+  }
 }
 
 module.exports = new User();
