@@ -2,11 +2,15 @@ const express = require("express");
 const router = express.Router();
 const UserService = require("../../services/UserService");
 
-router.delete("/delete-user", async (req, res) => {
-  const deletedUser = await UserService.deleteUser(user);
-  return res
-    .status(200)
-    .json({ message: "User was deleted.", deleted_user: deletedUser });
+router.delete("/delete-user/:id", async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  try {
+    await UserService.deleteUser(id);
+    return res.status(200).json({ message: "User was deleted." });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
 });
 
 router.get("/notes", async (req, res) => {
@@ -14,7 +18,9 @@ router.get("/notes", async (req, res) => {
   try {
     const notes = await UserService.getAllNotes(user);
     const notes_count = notes.length;
-    return res.status(200).json({ message: "Success", notes_count: notes_count, notes: notes });
+    return res
+      .status(200)
+      .json({ message: "Success", notes_count: notes_count, notes: notes });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -31,16 +37,15 @@ router.post("/add-note", async (req, res) => {
   }
 });
 
-router.delete('/delete-note/:id', async(req, res) => {
-    const note_id = req.params.id;
-    const user = req.user;
-    try {
-        const deletedNote = await UserService.deleteNote(user, note_id);
-        return res.status(200).json({ message: "Deleted note", note: deletedNote });
-      } catch (err) {
-        return res.status(500).json({ message: err.message });
-      }
-
-})
+router.delete("/delete-note/:id", async (req, res) => {
+  const note_id = req.params.id;
+  const user = req.user;
+  try {
+    await UserService.deleteNote(user, note_id);
+    return res.status(200).json({ message: "Deleted note" });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+});
 
 module.exports = router;

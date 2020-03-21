@@ -11,42 +11,38 @@ class User {
   constructor() {}
 
   async createUser(name, login, password) {
-    const users = await this.getUsers();
+    const {users} = await this.getUsers();
     const user = { id: uniqid(), name, login, password, notes: [] };
-    users.users.push(user);
-    await this.saveUsers(users);
+    users.push(user);
+    await this.saveUsers({users: users});
     return user;
   }
 
   async deleteUser(id) {
-    const users = await this.getUsers();
-    const indexToDelete = users.users.findIndex(user => user.id === id);
-    const userToDelete = users.users.slice(indexToDelete, indexToDelete + 1)[0];
-    users.users.splice(indexToDelete, 1);
-    await this.saveUsers(users);
-    return userToDelete;
+    const {users} = await this.getUsers();
+    const indexToDelete = users.findIndex(user => user.id === id);
+    console.log(indexToDelete);
+    
+    await Notes.deleteAllUserNotes(id);
+    users.splice(indexToDelete, 1);
+    await this.saveUsers({users: users});
   }
 
   async getUserByLogin(login) {
-    const users = await this.getUsers();
-    const [user] = users.users.filter(user => user.login === login);
+    const {users} = await this.getUsers();
+    const [user] = users.filter(user => user.login === login);
     return user;
   }
 
   async getUserById(id) {
-    const users = await this.getUsers();
-    const [user] = users.users.filter(user => user.id === id);
+    const {users} = await this.getUsers();
+    const [user] = users.filter(user => user.id === id);
     return user;
   }
 
   async isLoginExist(login) {
-    const users = await this.getUsers();
-    for (let user of users.users) {
-      if (user.login === login) {
-        return true;
-      }
-    }
-    return false;
+    const {users} = await this.getUsers();
+    return users.some((user) => user.login === login);
   }
 
   async getUsers() {
@@ -74,20 +70,19 @@ class User {
     const newNote = await Notes.createNote(note, id);
     const user = await this.getUserById(id);
     user.notes.push(newNote.id);
-    const users = await this.getUsers();
-    const userIndex = users.users.findIndex(user => user.id === id);
-    users.users.splice(userIndex, 1, user);
-    await this.saveUsers(users);
+    const {users} = await this.getUsers();
+    const userIndex = users.findIndex(user => user.id === id);
+    users.splice(userIndex, 1, user);
+    await this.saveUsers({users: users});
     return newNote;
   }
 
   async deleteNote(id, note_id) {
-    const deletedNote = await Notes.deleteNote(note_id);
-    const users = await this.getUsers();
-    const userIndex = users.users.findIndex(user => user.id === id);
-    users.users[userIndex].notes.splice(deletedNote.id, 1);
-    await this.saveUsers(users);
-    return deletedNote;
+    await Notes.deleteNote(note_id);
+    const {users} = await this.getUsers();
+    const userIndex = users.findIndex(user => user.id === id);
+    users[userIndex].notes.splice(note_id, 1);
+    await this.saveUsers({users: users});
   }
 }
 

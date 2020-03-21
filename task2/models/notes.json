@@ -1,24 +1,6 @@
 {
   "notes": [
     {
-      "user_id": "5a3mcf7ok80q3js7",
-      "text": "Some old note",
-      "checked": "false",
-      "id": "5a3mcaqck81k2wjn"
-    },
-    {
-      "user_id": "5a3mcf7ok80q3js7",
-      "text": "some new text",
-      "checked": "true",
-      "id": "5a3mc84ok81k7hx1"
-    },
-    {
-      "user_id": "5a3mcf7ok80q3js7",
-      "text": "Some old note",
-      "checked": "true",
-      "id": "5a3mcev0k81k8i3u"
-    },
-    {
       "user_id": "5a3mc234k81nbkxk",
       "text": "my new note",
       "checked": false,

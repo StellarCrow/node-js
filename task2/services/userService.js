@@ -39,11 +39,9 @@ class UserService {
     return { token: jwt_token, user: user };
   }
 
-  async deleteUser(user) {
-    const id = user.id;
+  async deleteUser(id) {
     try {
-      const deletedUser = await Users.deleteUser(id);
-      return deletedUser;
+      await Users.deleteUser(id);
     } catch (err) {
       throw new Error(err.message);
     }
@@ -67,8 +65,7 @@ class UserService {
 
   async deleteNote(user, note_id) {
     const id = user.id;
-    const deletedNote = await Users.deleteNote(id, note_id);
-    return deletedNote;
+    await Users.deleteNote(id, note_id);
   }
 }
 
