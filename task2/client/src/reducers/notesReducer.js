@@ -3,21 +3,22 @@ import {
   ADD_NOTE,
   DELETE_NOTE,
   CHANGE_NOTE_STATE,
-  CHANGE_NOTE_TEXT
+  CHANGE_NOTE_TEXT,
+  NOTES_LOADING
 } from "../actions/types";
 
 const initialState = {
-  notes: [
-    { text: "lalala", id: "1" },
-    { text: "bababaa", id: "2" }
-  ]
+  notes: [],
+  loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_NOTES:
       return {
-        ...state
+        ...state,
+        notes: action.payload,
+        loading: false
       };
     case DELETE_NOTE:
       return {
@@ -26,8 +27,13 @@ export default function(state = initialState, action) {
       };
     case ADD_NOTE:
       return {
-          ...state,
-          notes: [action.payload, ...state.notes]
+        ...state,
+        notes: [action.payload, ...state.notes]
+      };
+    case NOTES_LOADING:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;

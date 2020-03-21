@@ -21,8 +21,7 @@ class AddNote extends Component {
     e.preventDefault();
 
     const newNote = {
-      text: this.state.text,
-      id: 3 //test
+      text: this.state.text
     };
     this.props.addNote(newNote);
   };

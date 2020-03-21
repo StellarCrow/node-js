@@ -1,27 +1,49 @@
+import axios from "axios";
+
 import {
   GET_NOTES,
   ADD_NOTE,
   DELETE_NOTE,
   CHANGE_NOTE_STATE,
-  CHANGE_NOTE_TEXT
+  CHANGE_NOTE_TEXT,
+  NOTES_LOADING
 } from "./types";
 
-export const getNotes = () => {
-  return {
-    type: GET_NOTES
-  };
+export const getNotes = () => dispatch => {
+  dispatch(setNotesLoading());
+  axios
+    .get("/profile/notes")
+    .then(res =>
+      dispatch({
+        type: GET_NOTES,
+        payload: res.data.notes
+      })
+    )
+    .catch(err => {
+      console.log(err.message);
+    });
 };
 
-export const deleteNote = id => {
-  return {
-    type: DELETE_NOTE,
-    payload: id
-  };
+export const deleteNote = id => dispatch => {
+  axios.delete(`/profile/delete-note/${id}`).then(res =>
+    dispatch({
+      type: DELETE_NOTE,
+      payload: id
+    })
+  );
 };
 
-export const addNote = note => {
-    return {
+export const addNote = note => dispatch => {
+  axios.post("/profile/add-note", { note: note }).then(res =>
+    dispatch({
       type: ADD_NOTE,
-      payload: note
-    };
+      payload: res.data.note
+    })
+  );
+};
+
+export const setNotesLoading = () => {
+  return {
+    type: NOTES_LOADING
   };
+};
