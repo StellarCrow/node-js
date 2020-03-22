@@ -39,6 +39,10 @@ class UserService {
     return { token: jwt_token, user: user };
   }
 
+  async getUser(id) {
+    return await Users.getUserById(id);
+  }
+
   async deleteUser(id) {
     try {
       await Users.deleteUser(id);

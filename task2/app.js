@@ -18,8 +18,8 @@ app.use('/api', loginRouter);
 
 app.use(authorized);
 
-app.use('/note', noteRouter);
-app.use('/profile', profileRouter);
+app.use('/api/note', noteRouter);
+app.use('/api/profile', profileRouter);
 
 
 app.listen(PORT, () => {
