@@ -2,6 +2,16 @@ const express = require("express");
 const router = express.Router();
 const UserService = require("../../services/UserService");
 
+router.get("/", async (req, res) => {
+  const user = req.user;
+  try {
+    const userProfile = await UserService.getUser(user.id);
+    return res.status(200).json({ user: userProfile });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+});
+
 router.delete("/delete-user/:id", async (req, res) => {
   const id = req.params.id;
   console.log(id);
