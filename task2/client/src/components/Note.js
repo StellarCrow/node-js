@@ -20,11 +20,17 @@ class Note extends Component {
         this.props.deleteNote(id);
     }
 
+    checkboxChangedHandler = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
     render() {
         return (
             <div className="note" id={this.state.id}>
                 <div className="note__check">
-                    <input type="checkbox" name={this.state.name} checked={this.state.checked}/>
+                    <input type="checkbox" name={this.state.name} defaultChecked={this.state.checked} onChange={this.checkboxChangedHandler}/>
                 </div>
                 <div className="note__text">{this.state.text}</div>
                 <div className="note__options">

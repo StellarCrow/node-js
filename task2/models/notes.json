@@ -1,10 +1,1 @@
-{
-  "notes": [
-    {
-      "user_id": "5a3mc234k81nbkxk",
-      "text": "my new note",
-      "checked": false,
-      "id": "5a3mc7jsk81ni9j0"
-    }
-  ]
-}
+{"notes":[{"user_id":"5a3mc234k81nbkxk","text":"my new note","checked":false,"id":"5a3mc7jsk81ni9j0"},{"user_id":"5a3mcgbsk81y4v86","text":"new note","checked":false,"id":"5a3mc2iok82skimd"},{"user_id":"5a3mcgbsk81y4v86","text":"note","checked":false,"id":"5a3mc1u8k82sq0et"}]}

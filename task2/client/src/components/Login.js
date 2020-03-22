@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
+import { connect } from "react-redux";
+import { loginUser } from "../actions/authActions";
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -10,34 +12,20 @@ export default class Login extends Component {
       password: "",
       loginErrors: ""
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({
-        [event.target.name]: event.target.value
-    })
-  }
+      [event.target.name]: event.target.value
+    });
+  };
 
-  handleSubmit(event) {
-      const {
-          login,
-          password
-      } = this.state;
-
-    axios.post("http://localhost:5000/api/login", {
-        login: login,
-        password: password
-    }).then(response => {
-        console.log("reg response", response);
-    }).catch(err => {
-        console.log("Error: " + err);
-        
-    })
+  handleSubmit = event => {
     event.preventDefault();
-  }
+    const { login, password } = this.state;
+    const user = {login, password};
+    this.props.loginUser(user);
+  };
 
   render() {
     return (
@@ -77,3 +65,10 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);

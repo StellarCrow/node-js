@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import NoteList from "../components/NoteList";
 import AddNote from "../components/AddNote";
-import store from "../store";
+import { connect } from 'react-redux';
 import {loadUser} from '../actions/authActions';
 
 class Profile extends Component {
   componentDidMount() {
-    store.dispatch(loadUser);
+    this.props.loadUser();
   }
 
   render() {
@@ -20,4 +20,8 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, {loadUser})(Profile);

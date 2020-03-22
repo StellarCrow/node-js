@@ -1,4 +1,5 @@
 import axios from "axios";
+import  { tokenConfig } from "./authActions";
 
 import {
   GET_NOTES,
@@ -9,10 +10,10 @@ import {
   NOTES_LOADING
 } from "./types";
 
-export const getNotes = () => dispatch => {
+export const getNotes = () => (dispatch, getState) => {
   dispatch(setNotesLoading());
   axios
-    .get("/profile/notes")
+    .get("/api/profile/notes", tokenConfig(getState))
     .then(res =>
       dispatch({
         type: GET_NOTES,
@@ -24,8 +25,8 @@ export const getNotes = () => dispatch => {
     });
 };
 
-export const deleteNote = id => dispatch => {
-  axios.delete(`/profile/delete-note/${id}`).then(res =>
+export const deleteNote = id => (dispatch, getState) => {
+  axios.delete(`/api/profile/delete-note/${id}`, tokenConfig(getState)).then(res =>
     dispatch({
       type: DELETE_NOTE,
       payload: id
@@ -33,8 +34,8 @@ export const deleteNote = id => dispatch => {
   );
 };
 
-export const addNote = note => dispatch => {
-  axios.post("/profile/add-note", { note: note }).then(res =>
+export const addNote = note => (dispatch, getState) => {
+  axios.post("/api/profile/add-note", { note: note }, tokenConfig(getState)).then(res =>
     dispatch({
       type: ADD_NOTE,
       payload: res.data.note
