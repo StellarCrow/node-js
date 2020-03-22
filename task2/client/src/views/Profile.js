@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import NoteList from "../components/NoteList";
 import AddNote from "../components/AddNote";
-import { connect } from 'react-redux';
-import {loadUser} from '../actions/authActions';
+import { connect } from "react-redux";
+import { loadUser } from "../actions/authActions";
+import "./Profile.css";
 
 class Profile extends Component {
   componentDidMount() {
@@ -13,8 +14,14 @@ class Profile extends Component {
     return (
       <div className="profile">
         <h2>Welcome, user!</h2>
-        <AddNote></AddNote>
-        <NoteList></NoteList>
+        <div className="profile__wrapper">
+          <div className="profile__item">
+            <AddNote></AddNote>
+          </div>
+          <div className="profile__item">
+            <NoteList></NoteList>
+          </div>
+        </div>
       </div>
     );
   }
@@ -22,6 +29,6 @@ class Profile extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth
-})
+});
 
-export default connect(mapStateToProps, {loadUser})(Profile);
+export default connect(mapStateToProps, { loadUser })(Profile);

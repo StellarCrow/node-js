@@ -28,7 +28,7 @@ class AddNote extends Component {
 
   render() {
     return (
-      <form className="add-note" onSubmit={this.onSubmit}>
+      <form className="add-note" onSubmit={this.onSubmit} autoComplete="off">
         <div className="add-note__group">
           <label htmlFor="note" className="add-note__label">
             Add note

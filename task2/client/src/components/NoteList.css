@@ -1,0 +1,58 @@
+.notes-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notes-list__item {
+  background-color: rgb(238, 249, 255);
+  padding: 3% 2%;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1em;
+  border-radius: 1em;
+  border: 1px solid rgb(187, 231, 255);
+}
+
+.note {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1.5em;
+}
+
+.note__button,
+.add-note__button {
+  background-color: rgb(187, 255, 198);
+  border-radius: 0.5em;
+  border: 1px solid rgb(150, 223, 162);
+  padding: 0.5em 0.8em;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+}
+
+.add-note__button {
+    margin: 0;
+}
+
+.note__button--delete {
+  background-color: rgb(255, 187, 187);
+  border: 1px solid rgb(223, 150, 150);
+}
+
+.note__button--modify {
+  background-color: rgb(255, 231, 187);
+  border: 1px solid rgb(223, 192, 150);
+}
+
+.add-note {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.add-note__label {
+  display: block;
+  font-weight: 700;
+}

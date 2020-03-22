@@ -3,6 +3,7 @@ import Note from "./Note";
 import { connect } from "react-redux";
 import { getNotes } from "../actions/noteActions";
 import PropTypes from "prop-types";
+import "./NoteList.css";
 
 class NoteList extends Component {
 
