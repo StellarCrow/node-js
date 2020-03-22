@@ -1,0 +1,15 @@
+.profile {
+    text-align: center;
+}
+
+.profile__wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.profile__item {
+    padding: 3%;
+    flex: 0 1 45%;
+
+}

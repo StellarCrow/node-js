@@ -1,0 +1,45 @@
+.home {
+    text-align: center;
+}
+
+.home__forms {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+    text-align: left;
+}
+
+.home__form {
+    flex: 0 1 40%;
+}
+
+.form {
+    padding: 4% 3%;
+    background-color: rgb(233, 247, 255);
+    border-radius: 1em;
+    box-shadow: 0 0 5px gray;
+}
+
+.form__group {
+    margin-bottom: 2em;
+}
+
+.form__label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+.form__input {
+    padding: 0.4em 0.8em;
+}
+
+.form__button {
+    background-color: rgb(187, 255, 198);
+    border-radius: 0.5em;
+    border: 1px solid rgb(150, 223, 162);
+    padding: 0.5em 0.8em;
+    cursor: pointer;
+    margin: 0 auto;
+    display: block;
+}
