@@ -19,6 +19,7 @@ class Profile extends Component {
             <AddNote></AddNote>
           </div>
           <div className="profile__item">
+            <h3>Click on the note to change text and then click Modify button to save changes</h3>
             <NoteList></NoteList>
           </div>
         </div>

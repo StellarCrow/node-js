@@ -35,6 +35,11 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
+    case CHANGE_NOTE_TEXT:
+    case CHANGE_NOTE_STATE:
+      return {
+        ...state
+      }
     default:
       return state;
   }

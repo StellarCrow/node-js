@@ -43,6 +43,27 @@ export const addNote = note => (dispatch, getState) => {
   );
 };
 
+export const changeNoteText = (id, text) => (dispatch, getState) => {
+  axios.put("/api/note/modify", {note: id, text: text}, tokenConfig(getState))
+  .then(res => dispatch({
+    type: CHANGE_NOTE_TEXT,
+    payload: res.data.note
+  })).catch (err => {
+    console.log(err.response);
+  })
+}
+
+export const changeNoteChecked = (id, checked) => (dispatch, getState) => {
+  axios.post("/api/note/check", {note: id, checked: checked}, tokenConfig(getState))
+  .then(res => dispatch({
+    type: CHANGE_NOTE_STATE,
+    payload: res.data.note
+  })).catch (err => {
+    console.log(err.response);
+  })
+}
+
+
 export const setNotesLoading = () => {
   return {
     type: NOTES_LOADING

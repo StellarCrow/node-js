@@ -1,50 +1,101 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {deleteNote} from '../actions/noteActions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+  deleteNote,
+  changeNoteText,
+  changeNoteChecked
+} from "../actions/noteActions";
 
 class Note extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        const {id, name, text, checked} = props.note;
+    const { id, name, text, checked } = props.note;
 
-        this.state = {
-            id: id,
-            name: name,
-            text: text,
-            checked: checked
-        }
-    }
+    this.state = {
+      id: id,
+      name: name,
+      text: text,
+      checked: checked
+    };
+  }
 
-    onDeleteClick = (id) => {
-        this.props.deleteNote(id);
-    }
+  onModifyClick = id => {
+    const text = this.state.text;
+    this.props.changeNoteText(id, text);
+  };
 
-    checkboxChangedHandler = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+  onChangedCheckedHandler = e => {
+    this.setState(
+      {
+        [e.target.name]: e.target.checked
+      },
+      function() {
+        const id = this.state.id;
+        const checked = this.state.checked;
+        console.log(checked);
+        this.props.changeNoteChecked(id, checked);
+      }
+    );
+  };
 
-    render() {
-        return (
-            <div className="note" id={this.state.id}>
-                <div className="note__check">
-                    <input type="checkbox" name={this.state.name} defaultChecked={this.state.checked} onChange={this.checkboxChangedHandler}/>
-                </div>
-                <div className="note__text">{this.state.text}</div>
-                <div className="note__options">
-                    <button className="note__button note__button--delete" onClick={this.onDeleteClick.bind(this, this.state.id)}>Delete</button>
-                    <button className="note__button note__button--modify">Modify</button>
-                </div>
-            </div>
-        )
-    }
+  onDeleteClick = id => {
+    this.props.deleteNote(id);
+  };
+
+  inputChangedHandler = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+
+    console.log(this.state.text);
+  };
+
+  render() {
+    return (
+      <div className="note" id={this.state.id}>
+        <div className="note__check">
+          <input
+            type="checkbox"
+            name={this.state.name}
+            defaultChecked={this.state.checked}
+            onChange={this.onChangedCheckedHandler}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            className="note__text"
+            defaultValue={this.state.text}
+            onChange={this.inputChangedHandler}
+          />
+        </div>
+        <div className="note__options">
+          <button
+            className="note__button note__button--delete"
+            onClick={this.onDeleteClick.bind(this, this.state.id)}
+          >
+            Delete
+          </button>
+          <button
+            className="note__button note__button--modify"
+            onClick={this.onModifyClick.bind(this, this.state.id)}
+          >
+            Modify
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    notes: state.note,
-    note: ownProps.note
-})
+  notes: state.note,
+  note: ownProps.note
+});
 
-export default connect(mapStateToProps, { deleteNote })(Note);
+export default connect(mapStateToProps, {
+  deleteNote,
+  changeNoteText,
+  changeNoteChecked
+})(Note);
