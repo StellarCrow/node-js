@@ -33,7 +33,6 @@ class Note extends Component {
       function() {
         const id = this.state.id;
         const checked = this.state.checked;
-        console.log(checked);
         this.props.changeNoteChecked(id, checked);
       }
     );
@@ -47,8 +46,6 @@ class Note extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-
-    console.log(this.state.text);
   };
 
   render() {
@@ -57,7 +54,7 @@ class Note extends Component {
         <div className="note__check">
           <input
             type="checkbox"
-            name={this.state.name}
+            name="checked"
             defaultChecked={this.state.checked}
             onChange={this.onChangedCheckedHandler}
           />
@@ -66,6 +63,7 @@ class Note extends Component {
           <input
             type="text"
             className="note__text"
+            name="text"
             defaultValue={this.state.text}
             onChange={this.inputChangedHandler}
           />
